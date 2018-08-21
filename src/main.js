@@ -7,10 +7,14 @@ import service from './service/index.js'
 import fastClick from 'fastclick'
 import './assets/styles/reset.css'
 import './assets/styles/border.css'
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
 
 Vue.config.productionTip = false
 Vue.prototype.$ajax = service.ajax
 fastClick.attach(document.body)
+
+Vue.use(iView);
 
 /* eslint-disable no-new */
 new Vue({

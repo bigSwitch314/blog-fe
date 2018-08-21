@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="bgc">
     <router-view>  </router-view>
   </div>
 </template>
@@ -8,6 +8,7 @@
 
 </script>
 
-<style>
-
+<style lang="stylus" scoped>
+  .bgc
+    background-color: #1f2d3d
 </style>
