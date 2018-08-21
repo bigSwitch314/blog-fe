@@ -32,11 +32,23 @@ export default {
         },
         {
           id: "4",
-          title: "用户管理",
+          title: "账号管理",
           path: "userList"
         },
       ],
       flag: 1,
+    }
+  },
+  created () {
+    const name = this.$route.path.split('/').pop();
+    if (name.indexOf("article") != -1) {
+      this.flag = 1;
+    } else if (name.indexOf("category") != -1) {
+      this.flag = 2;
+    } else if (name.indexOf("label") != -1) {
+      this.flag = 3;
+    } else if (name.indexOf("user") != -1) {
+      this.flag = 4;
     }
   },
   methods: {

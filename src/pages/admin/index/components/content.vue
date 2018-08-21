@@ -53,7 +53,7 @@ export default {
           this.back = true;
           this.title = '分类列表';
           this.subtitle = ' > 分类添加';
-          this.urlFrom = '/admin/index/cagegoryList'
+          this.urlFrom = '/admin/index/categoryList'
           break;
         case 'labelList':
           this.back = false;
@@ -73,8 +73,8 @@ export default {
           break;
         case 'userAdd':
           this.back = true;
-          this.title = '用户添加';
-          this.subtitle = ' > 用户添加';
+          this.title = '账号添加';
+          this.subtitle = ' > 账号添加';
           this.urlFrom = '/admin/index/userList'
           break;
       }
@@ -118,13 +118,13 @@ export default {
           break;
         case 'userList':
           this.back = false;
-          this.title = '用户列表';
+          this.title = '账号列表';
           this.subtitle = '';
           break;
         case 'userAdd':
           this.back = true;
-          this.title = '用户添加';
-          this.subtitle = ' > 用户添加';
+          this.title = '账号添加';
+          this.subtitle = ' > 账号添加';
           break;
       }
     }
