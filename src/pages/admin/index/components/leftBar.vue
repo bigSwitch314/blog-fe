@@ -2,7 +2,7 @@
   <div class="leftBar">
     <ul>
        <li v-for="menu of menus" :key="menu.id" class="li_style" @click="choseMenu(menu.id)">
-         <router-link :to="'/admin/index/'+menu.path+'?flag='+flag" :class="menu.id==flag? 'links' :'link'">{{menu.title}}</router-link>
+         <router-link :to="'/admin/index/'+menu.path" :class="menu.id==flag? 'links' :'link'">{{menu.title}}</router-link>
        </li>
     </ul>
   </div>
@@ -40,21 +40,29 @@ export default {
     }
   },
   created () {
-    const name = this.$route.path.split('/').pop();
-    if (name.indexOf("article") != -1) {
-      this.flag = 1;
-    } else if (name.indexOf("category") != -1) {
-      this.flag = 2;
-    } else if (name.indexOf("label") != -1) {
-      this.flag = 3;
-    } else if (name.indexOf("user") != -1) {
-      this.flag = 4;
-    }
+    this.getMenu();
   },
   methods: {
     choseMenu: function(id) {
       this.flag=id;
+    },
+    getMenu: function() {
+       const name = this.$route.path.split('/').pop();
+      if (name.indexOf("article") != -1) {
+        this.flag = 1;
+      } else if (name.indexOf("category") != -1) {
+        this.flag = 2;
+      } else if (name.indexOf("label") != -1) {
+        this.flag = 3;
+      } else if (name.indexOf("user") != -1) {
+        this.flag = 4;
+      }
     } 
+  },
+   watch: {
+    '$route' (to, from) {
+     this.getMenu();
+    }
   }
 }
 </script>

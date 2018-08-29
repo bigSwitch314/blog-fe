@@ -4,6 +4,12 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
+    scrollBehavior(to, from,savedPosition) {
+      return {
+        x: 0,
+        y: 0
+     }
+    },
     mode: 'history',
     routes: [
         {
@@ -33,6 +39,11 @@ export default new Router({
                   path: 'userAdd',
                   name: '添加用户',
                   component: () => import('@/pages/admin/index/components/content/userAdd')
+                },
+                {
+                  path: 'userEdit',
+                  name: '编辑用户',
+                  component: () => import('@/pages/admin/index/components/content/userEdit')
                 },
                 {
                   path: 'categoryList',

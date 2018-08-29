@@ -30,8 +30,9 @@ export default {
       urlFrom: '',
     }
   },
-  created () {
-    const name = this.$route.path.split('/').pop();
+  methods: {
+    getTopTitle: function() {
+      const name = this.$route.path.split('/').pop();
       switch(name) {
         case 'articleList':
           this.back = false;
@@ -73,63 +74,27 @@ export default {
           break;
         case 'userAdd':
           this.back = true;
-          this.title = '账号添加';
+          this.title = '账号列表';
           this.subtitle = ' > 账号添加';
           this.urlFrom = '/admin/index/userList'
           break;
+        case 'userEdit':
+          this.back = true;
+          this.title = '账号列表';
+          this.subtitle = ' > 账号编辑';
+          break;
       }
+    }
+  },
+  created () {
+    this.getTopTitle();
   },
   watch: {
     '$route' (to, from) {
       this.urlTo = to.path;
       this.urlFrom = from.path;
-
-      const name = this.$route.path.split('/').pop();
-      switch(name) {
-        case 'articleList':
-          this.back = false;
-          this.title = '文章列表';
-          this.subtitle = '';
-          break;
-        case 'articleAdd':
-          this.back = true;
-          this.title = '文章列表';
-          this.subtitle = ' > 文章添加';
-          break;
-        case 'categoryList':
-          this.back = false;
-          this.title = '分类列表';
-          this.subtitle = '';
-          break;
-        case 'categoryAdd':
-          this.back = true;
-          this.title = '分类列表';
-          this.subtitle = ' > 分类添加';
-          break;
-        case 'labelList':
-          this.back = false;
-          this.title = '标签列表';
-          this.subtitle = '';
-          break;
-        case 'labelAdd':
-          this.back = true;
-          this.title = '标签列表';
-          this.subtitle = ' > 标签添加';
-          break;
-        case 'userList':
-          this.back = false;
-          this.title = '账号列表';
-          this.subtitle = '';
-          break;
-        case 'userAdd':
-          this.back = true;
-          this.title = '账号添加';
-          this.subtitle = ' > 账号添加';
-          break;
-      }
+      this.getTopTitle();
     }
-  },
-  methods: {
   }
 }
 </script>
@@ -139,18 +104,19 @@ export default {
   .content
     background: #f1f2f7
     top: 100px
-    left: 140px
+    left : 140px
     width: 100%
     height: 100%
     position: absolute
+    overflow:auto
     .border
       &:before
         border-color: #ccc
       &:after
         border-color: #ccc
     .tableDisplay
-       padding-right: 220px   
-       left: 40px
+       padding-right: 180px   
+       padding-left: 40px;
        top: 40px
        position: relative
     .top
@@ -181,6 +147,7 @@ export default {
         top: 10px
         left: 20px
         font-size: 14px
+        color: #999;
         position: relative
           
   
