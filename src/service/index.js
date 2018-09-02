@@ -23,7 +23,7 @@ const ajax2 = axios.create({
     // This is only applicable for request methods 'PUT', 'POST', and 'PATCH'
     return Qs.stringify(data);
   }],
-  timeout: 50000        // 请求超时时间
+  timeout: 50000  // 请求超时时间
 });
 
   export default {ajax, ajax2};

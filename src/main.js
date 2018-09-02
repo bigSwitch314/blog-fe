@@ -6,7 +6,7 @@ import App from './App'
 import router from './router/index.js'
 import service from './service/index.js'
 import fastClick from 'fastclick'
-import './assets/styles/reset.css'
+import './assets/styles/reset2.css'
 import './assets/styles/border.css'
 import iView from 'iview'
 

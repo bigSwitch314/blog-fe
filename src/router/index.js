@@ -12,70 +12,90 @@ export default new Router({
     },
     mode: 'history',
     routes: [
-        {
-            path: '/test',
-            name: '测试',
-            component: () => import('@/pages/test'),
-            children: [
+      {
+        path: '/test',
+        name: '测试',
+        component: () => import('@/pages/test'),
+        children: [
 
-            ]
-        },
-        {
-            path: '/admin/index',
-            name: '后台首页',
-            component: () => import('@/pages/admin/index/index'),
-            children: [
-                {
-                  path: '',
-                  name: '默认文章列表',
-                  component: () => import('@/pages/admin/index/components/content/articleList')
-                },
-                {
-                  path: 'userList',
-                  name: '用户列表',
-                  component: () => import('@/pages/admin/index/components/content/userList')
-                },
-                {
-                  path: 'userAdd',
-                  name: '添加用户',
-                  component: () => import('@/pages/admin/index/components/content/userAdd')
-                },
-                {
-                  path: 'userEdit',
-                  name: '编辑用户',
-                  component: () => import('@/pages/admin/index/components/content/userEdit')
-                },
-                {
-                  path: 'categoryList',
-                  name: '分类列表',
-                  component: () => import('@/pages/admin/index/components/content/categoryList')
-                },
-                {
-                    path: 'categoryAdd',
-                    name: '添加分类',
-                    component: () => import('@/pages/admin/index/components/content/categoryAdd')
-                },
-                {
-                  path: 'labelAdd',
-                  name: '默认文章列表',
-                  component: () => import('@/pages/admin/index/components/content/labelAdd')
-                },
-                {
-                  path: 'labelList',
-                  name: '默认文章列表',
-                  component: () => import('@/pages/admin/index/components/content/labelList')
-                },
-                {
-                  path: 'articleAdd',
-                  name: '默认文章列表',
-                  component: () => import('@/pages/admin/index/components/content/articleAdd')
-                },
-                {
-                  path: 'articleList',
-                  name: '默认文章列表',
-                  component: () => import('@/pages/admin/index/components/content/articleList')
-                },
-            ]
-        }, 
+        ]
+      },
+      {
+        path: '/admin/index/markd',
+        name: '测试',
+        component: () => import('@/pages/admin/index/markd')
+      },
+      {
+        path: '/admin/index',
+        name: '后台首页',
+        component: () => import('@/pages/admin/index/index'),
+        children: [
+          {
+            path: '',
+            name: '默认文章列表',
+            component: () => import('@/pages/admin/index/components/content/articleList')
+          },
+          {
+            path: 'userList',
+            name: '用户列表',
+            component: () => import('@/pages/admin/index/components/content/userList')
+          },
+          {
+            path: 'userAdd',
+            name: '添加用户',
+            component: () => import('@/pages/admin/index/components/content/userAdd')
+          },
+          {
+            path: 'userEdit',
+            name: '编辑用户',
+            component: () => import('@/pages/admin/index/components/content/userEdit')
+          },
+          {
+            path: 'categoryList',
+            name: '分类列表',
+            component: () => import('@/pages/admin/index/components/content/categoryList')
+          },
+          {
+            path: 'categoryAdd',
+            name: '添加分类',
+            component: () => import('@/pages/admin/index/components/content/categoryAdd')
+          },
+          {
+            path: 'categoryEdit',
+            name: '编辑分类',
+            component: () => import('@/pages/admin/index/components/content/categoryEdit')
+          },
+          {
+            path: 'labelAdd',
+            name: '添加标签',
+            component: () => import('@/pages/admin/index/components/content/labelAdd')
+          },
+          {
+            path: 'labelList',
+            name: '标签列表',
+            component: () => import('@/pages/admin/index/components/content/labelList')
+          },
+          {
+            path: 'labelEdit',
+            name: '编辑标签',
+            component: () => import('@/pages/admin/index/components/content/labelEdit')
+          },
+          {
+            path: 'articleAdd',
+            name: '默认文章列表',
+            component: () => import('@/pages/admin/index/components/content/articleAdd')
+          },
+          {
+            path: 'articleList',
+            name: '默认文章列表',
+            component: () => import('@/pages/admin/index/components/content/articleList')
+          },
+          {
+            path: 'articleEdit',
+            name: '编辑文章',
+            component: () => import('@/pages/admin/index/components/content/articleEdit')
+          },
+        ]
+      }, 
     ]
 })

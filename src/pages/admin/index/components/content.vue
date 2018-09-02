@@ -56,6 +56,12 @@ export default {
           this.subtitle = ' > 分类添加';
           this.urlFrom = '/admin/index/categoryList'
           break;
+        case 'categoryEdit':
+          this.back = true;
+          this.title = '分类列表';
+          this.subtitle = ' > 分类编辑';
+          this.urlFrom = '/admin/index/categoryList';
+          break;
         case 'labelList':
           this.back = false;
           this.title = '标签列表';
@@ -66,6 +72,12 @@ export default {
           this.title = '标签列表';
           this.subtitle = ' > 标签添加';
           this.urlFrom = '/admin/index/labelList'
+          break;
+        case 'labelEdit':
+          this.back = true;
+          this.title = '标签列表';
+          this.subtitle = ' > 标签编辑';
+          this.urlFrom = '/admin/index/labelList';
           break;
         case 'userList':
           this.back = false;

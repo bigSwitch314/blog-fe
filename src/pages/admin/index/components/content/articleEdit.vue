@@ -1,7 +1,7 @@
 <template>
   <div class="body border">
     <div class="title border">
-      <span class="title-content"> 文章添加</span>
+      <span class="title-content"> 文章编辑</span>
     </div>
     <Form ref="formItem" :model="formItem" :rules="ruleValidate" label-position="right" :label-width="90" class="fromSty">
         <FormItem label="标题" prop="title" class="itemSty">
@@ -25,8 +25,8 @@
         </FormItem>
         <FormItem label="发布" prop="release">
           <RadioGroup v-model="formItem.release">
-            <Radio label="1" >是</Radio>
-            <Radio label="0">否</Radio>
+            <Radio :label="1" >是</Radio>
+            <Radio :label="0">否</Radio>
           </RadioGroup>
         </FormItem>
         <FormItem label="内容" prop="content">
@@ -65,7 +65,7 @@ export default {
           { required: true, message: 'The category cannot be empty'}
         ],
         release: [
-          { required: true, message: 'The release cannot be empty' }
+          { required: true, message: 'The release cannot be empty'}
         ],
         content: [
           { required: true, message: 'The content cannot be empty', trigger: 'blur' }
@@ -84,7 +84,8 @@ export default {
         }
         
         this.loading = true;
-        this.$ajax.post('blog/article/add', {
+        this.$ajax.post('blog/article/edit', {
+          id: this.formItem.id,
           title: this.formItem.title,
           category_id: this.formItem.categorySelect,
           label_ids: this.formItem.labelSelect.toString(),
@@ -103,6 +104,30 @@ export default {
         }); 
       })
      
+    },
+    getDeatil: function() {
+    const id = this.$route.query.id;
+    this.loading = true;
+    this.$ajax
+      .post('blog/article/get', {
+        id: id
+      })
+      .then(res => {
+        this.loading = false;
+        if (res.data.errcode === 0) {
+          this.formItem.id = res.data.data.id;
+          this.formItem.title = res.data.data.title;
+          this.formItem.categorySelect = res.data.data.category_id;
+          this.formItem.labelSelect = res.data.data.label_ids;
+          this.formItem.release = res.data.data.release;
+          this.formItem.content = res.data.data.content;
+        } else {
+          this.$Message.error(res.data.errmsg);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      }); 
     },
     getCategory: function() {
        this.$ajax.post('blog/category/get', {})
@@ -134,6 +159,7 @@ export default {
   created () {
     this.getCategory();
     this.getLabel();
+    this.getDeatil();
   },
 }
 </script>

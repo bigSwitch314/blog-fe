@@ -130,8 +130,5 @@ export default {
       width: 740px
   .ivu-input
     font-size: 14px
-    
-
-    
 
 </style>
