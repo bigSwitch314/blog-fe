@@ -29,25 +29,45 @@
             <Radio :label="0">否</Radio>
           </RadioGroup>
         </FormItem>
+        <div class="content">
+          1111111
+        </div>
         <FormItem label="内容" prop="content">
-            <Input v-model="formItem.content" type="textarea" :autosize="{minRows: 4,maxRows: 8}" placeholder="Enter something..."></Input>
+            <Input v-model="msg.mdValue" type="textarea" :autosize="{minRows: 4,maxRows: 8}" placeholder="Enter something...">{{msg.mdValue}}</Input>
         </FormItem>
+        <div class="indexContainer">
+        <div class="editorContainer">
+            <markdown 
+            :mdValuesP="msg.mdValue"  
+            :fullPageStatusP="false" 
+            :editStatusP="true" 
+            :previewStatusP="true" 
+            :navStatusP="true"
+            :icoStatusP="true"  
+            @childevent="childEventHandler"
+            ></markdown>
+        </div>
+    </div>
         <FormItem>
           <Button type="primary" @click="submit">保存</Button>
           <Button style="margin-left: 40px" @click="$router.back()">取消</Button>
         </FormItem>
     </Form>
+     
   </div>
 </template>
 
 
 <script>
-//import TopBar from './components/topBar'
-
+import Markdown from '@/component/markdown/markdown'
 export default {
   name: 'userAdd',
+  components: {Markdown},
   data () {
     return {
+      msg: {
+        mdValue:'## Vue-markdownEditor22222'
+      },
       formItem: {
         title: '',
         categoryDisplay: [],
@@ -154,7 +174,11 @@ export default {
         .catch(err => {
           console.log(err);
         }); 
-    }
+    },
+    childEventHandler: function(res) {
+    // res会传回一个data,包含属性mdValue和htmlValue，具体含义请自行翻译
+    this.msg=res;
+  },
   },
   created () {
     this.getCategory();
@@ -203,7 +227,22 @@ export default {
       width: 740px
       .radioSty
         width 116px
+  
   .ivu-input
     font-size: 14px
+  .indexContainer 
+    width: 100%;
+    height: 100%;
+    background: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+  .editorContainer 
+    width: 90%;
+    height: 90%;
+    border: 1px solid #ddd;
+  .content
+    background: red;
 
 </style>

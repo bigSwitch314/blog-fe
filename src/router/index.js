@@ -26,6 +26,23 @@ export default new Router({
         component: () => import('@/pages/admin/index/markd')
       },
       {
+        path: '/abace/index',
+        name: '测试项目',
+        component: () => import('@/pages/abace/index'),
+        children: [
+          {
+            path: '',
+            name: '默认首页',
+            component: () => import('@/pages/abace/components/search')
+          },
+          {
+            path: 'customerList',
+            name: '默认首页',
+            component: () => import('@/pages/abace/components/customerList')
+          }
+        ]
+      },
+      {
         path: '/admin/index',
         name: '后台首页',
         component: () => import('@/pages/admin/index/index'),

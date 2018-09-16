@@ -50,9 +50,9 @@
         renderer: new marked.Renderer(),
         gfm: true,
         tables: true,
-        breaks: false,
+        breaks: true,
         pedantic: false,
-        sanitize: true,
+        sanitize: false,
         smartLists: true,
         smartypants: false,
         highlight: function(code) {
@@ -60,7 +60,7 @@
             const handleCode = [];
             const gutter = [];
             hlCode.split('*@*').forEach((item, index)=> {
-               handleCode.push('<div class="line">' + item + '</div>');
+               handleCode.push('<div class="line">' + '&nbsp;' + item + '</div>');
                gutter.push('<div class="line">' + ++index + '</div>');
             });
             return '<table style="background:#f7f7f7;margin-bottom:0px;display:inline-flex;width:100%;overflow:auto">' + 
@@ -275,12 +275,8 @@
         },
         computed: {
             compiledMarkdown: function() {
-                console.log(this.input);
-                console.log( marked(this.input, {
-                    sanitize: true
-                }));
                 return marked(this.input, {
-                    sanitize: true
+                    sanitize: false
                 })
             }
         },
@@ -289,7 +285,7 @@
                 let data = {};
                 data.mdValue = this.input;
                 data.htmlValue = marked(this.input, {
-                    sanitize: true
+                    sanitize: false 
                 });
                 this.$emit('childevent', data);
                 let maxEditScrollHeight=document.querySelector('.mdEditor').scrollHeight-document.querySelector('.mdEditor').clientHeight;
@@ -302,13 +298,10 @@
 </script>
 
 <style lang="scss" scoped>
- /*引入reset文件*/
-    @import "../../assets/styles/reset.scss";
+
 </style>
 
 <style lang="stylus" scoped>
-   
-
     /*引入github的markdown样式文件*/
     @import "../../assets/styles/github-markdown.css";
     
