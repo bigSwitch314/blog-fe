@@ -29,25 +29,12 @@
             <Radio :label="0">否</Radio>
           </RadioGroup>
         </FormItem>
-        <div class="content">
-          1111111
-        </div>
         <FormItem label="内容" prop="content">
             <Input v-model="msg.mdValue" type="textarea" :autosize="{minRows: 4,maxRows: 8}" placeholder="Enter something...">{{msg.mdValue}}</Input>
         </FormItem>
-        <div class="indexContainer">
-        <div class="editorContainer">
-            <markdown 
-            :mdValuesP="msg.mdValue"  
-            :fullPageStatusP="false" 
-            :editStatusP="true" 
-            :previewStatusP="true" 
-            :navStatusP="true"
-            :icoStatusP="true"  
-            @childevent="childEventHandler"
-            ></markdown>
-        </div>
-    </div>
+        <span @click.native="contentEdit">编辑</span>
+        
+       
         <FormItem>
           <Button type="primary" @click="submit">保存</Button>
           <Button style="margin-left: 40px" @click="$router.back()">取消</Button>
@@ -176,9 +163,12 @@ export default {
         }); 
     },
     childEventHandler: function(res) {
-    // res会传回一个data,包含属性mdValue和htmlValue，具体含义请自行翻译
-    this.msg=res;
-  },
+      // res会传回一个data,包含属性mdValue和htmlValue，具体含义请自行翻译
+      this.msg=res;
+    },
+    contentEdit () {
+      alert(11);
+    }
   },
   created () {
     this.getCategory();
@@ -230,19 +220,5 @@ export default {
   
   .ivu-input
     font-size: 14px
-  .indexContainer 
-    width: 100%;
-    height: 100%;
-    background: #ddd;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-  .editorContainer 
-    width: 90%;
-    height: 90%;
-    border: 1px solid #ddd;
-  .content
-    background: red;
 
 </style>

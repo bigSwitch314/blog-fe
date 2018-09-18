@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="content">
-      <Input v-model="keyword" search enter-button placeholder="Enter something..." class="inputSty"  @click.native="doSearch" />
+      <Input v-model="keyword" search enter-button  placeholder="Enter something..." class="inputSty"  @on-search="doSearch" />
       <Select v-model="selected" class="selectSty">
         <Option :value=1 >by Cat</Option>
         <Option :value=2 >by Title</Option>
@@ -30,12 +30,13 @@ export default {
   },
   methods: {
     doSearch () {
-      alert(this.keyword)
-       if (!this.keyword) {
-          this.$Message.config({top: 200});
-          this.$Message.error('请完成信息填写!');
-          return false;
-        }
+      if (!this.keyword) {
+        this.$Message.config({top: 200});
+        this.$Message.error('请输入搜索关键字!');
+        return false;
+      }
+      this.$router.push('/abace/index/customerList?type='+this.selected+'&keyword='+this.keyword);
+      //this.$emit('getChildValue', {type:this.selected, keyword:this.keyword})
     }
     
   },

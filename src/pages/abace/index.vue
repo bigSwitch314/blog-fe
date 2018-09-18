@@ -12,7 +12,18 @@ import Content from './components/content'
 
 export default {
   name: 'adminIndex',
-  components: {TopBar, Content}
+  components: {TopBar, Content},
+  data () {
+    return {
+      selected: 1,
+      keyword: 'cat-10001'
+    }
+  },
+  methods: {
+    getChildValue (childValue) {
+      console.log(childValue)
+    }
+  }
 }
 </script>
 

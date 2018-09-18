@@ -4,7 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
-    scrollBehavior(to, from,savedPosition) {
+    scrollBehavior(to, from, savedPosition) {
       return {
         x: 0,
         y: 0
@@ -21,9 +21,9 @@ export default new Router({
         ]
       },
       {
-        path: '/admin/index/markd',
+        path: '/admin/index/markdown',
         name: '测试',
-        component: () => import('@/pages/admin/index/markd')
+        component: () => import('@/pages/admin/index/markdown')
       },
       {
         path: '/abace/index',
@@ -37,8 +37,18 @@ export default new Router({
           },
           {
             path: 'customerList',
-            name: '默认首页',
+            name: '客户列表',
             component: () => import('@/pages/abace/components/customerList')
+          },
+          {
+            path: 'customerAdd',
+            name: '客户添加',
+            component: () => import('@/pages/abace/components/customerAdd')
+          },
+          {
+            path: 'customerEdit',
+            name: '客户编辑',
+            component: () => import('@/pages/abace/components/customerEdit')
           }
         ]
       },

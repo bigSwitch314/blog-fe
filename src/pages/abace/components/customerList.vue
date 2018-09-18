@@ -4,7 +4,7 @@
       <span class="title">CustomerList</span>
     </div>
     <header class="header">
-        <Input v-model="keyword" search enter-button placeholder="Enter something..." class="inputSty"  @click.native="doSearch" />
+        <Input v-model="keyword" search enter-button placeholder="Enter something..." class="inputSty"  @on-search="doSearch" />
         <Select v-model="selected" class="selectSty">
           <Option :value=1 >by Cat</Option>
           <Option :value=2 >by Title</Option>
@@ -16,16 +16,17 @@
           <a href="" style="margin-left: 15px;">CompanyList</a>
         </span>
     </header>
-    <Table stripe :columns="columns" :data="data" @on-selection-change="handleSelect"></Table>
+    <Table stripe :columns="columns" :data="data" @on-selection-change="handleSelect" ref="table"></Table>
     <footer class="footer">
-      <Button type="success" class="btn" to="/admin/index/articleAdd">Add</Button>
+      <Button type="success" class="btn" to="/abace/index/customerAdd">Add</Button>
       <Dropdown placement="top" @on-click="otherCase" class="dropDownSty">
         <a href="javascript:void(0)">	
           Other
           <Icon type="ios-arrow-down"></Icon>
         </a>
         <DropdownMenu slot="list">
-          <DropdownItem name="0">批量删除</DropdownItem>
+          <DropdownItem name="0">BatchDelete</DropdownItem>
+          <DropdownItem name="1">Export</DropdownItem>
         </DropdownMenu>
       </Dropdown>
       <Page :total="pageTotal" show-total show-sizer :postData="searchData" @on-change="pageChange" @on-page-size-change="pageSizeChange" placement="top" class="pag"></Page>
@@ -35,7 +36,7 @@
       <div>Loading</div>
     </Spin>
   </div>
-
+    
 </template>
 <script>
 // Page组件用英文显示
@@ -48,6 +49,8 @@ Vue.component('Page', Page);
     export default {
       data () {
         return {
+          selected: 1,
+          keyword: 'cat-100010',
           searchData: {
             page_no: 1,
             page_size: 10
@@ -104,7 +107,7 @@ Vue.component('Page', Page);
               width: 100
             },
             {
-              title: '操作', 
+              title: 'Operation', 
               key: 'action',
               align: 'center',
               width: 140,
@@ -120,7 +123,7 @@ Vue.component('Page', Page);
                     },
                     on: {
                       click: () => {
-                        this.editArticle(params.row.id)
+                        this.editCustomer(params.row.id)
                       }
                     }
                   }, 'edit'),
@@ -132,7 +135,7 @@ Vue.component('Page', Page);
                     },
                     on: {
                       click: () => {
-                        this.delArticle(params.row.id)
+                        this.delCustomer(params.row.id)
                       }
                     }
                   }, 'delete')
@@ -150,64 +153,48 @@ Vue.component('Page', Page);
               instrudy: '-',
               tag: 'tag-00000001',
               create_time: '2018-9-12'
-            },
-            {
-              cat: 'cat-00000002',
-              first_name: 'Michelle',
-              title: 'Psychiatry',
-              company: 'company-00000002',
-              address: 'address-00000002',
-              instrudy: '-',
-              tag: 'tag-00000002',
-              create_time: '2018-9-13'
-            },
-            {
-              cat: 'cat-00000003',
-              first_name: 'Marvin',
-              title: 'Psychiatry',
-              company: 'company-00000003',
-              address: 'address-00000003',
-              instrudy: '-',
-              tag: 'tag-00000003',
-              create_time: '2018-9-14'
-            },
+            }
           ],
           loading: false,
           selection: []
         }
       },
       created () {
+        this.selected = parseInt(this.$route.query.type) ? parseInt(this.$route.query.type) : 1;
+        this.keyword = this.$route.query.keyword ? this.$route.query.keyword: 'cat-100001';
         this.getList();
       },
       methods: {
         getList: function() {
-          // this.loading = true;
-          // const searchData = this.searchData;
-          // this.$ajax.post('blog/article/get', {
-          //   page_no: searchData.page_no,
-          //   page_size: searchData.page_size
-          // })
-          // .then(res => {
-          //   this.loading = false;
-          //   if (res.data.errcode === 0) {
-          //     this.data = res.data.data.list;
-          //     this.pageTotal = res.data.data.count;
-          //   } else {
-          //     this.$Message.error(res.data.errmsg);
-          //   }
-          // })
-          // .catch(err => {
-          //   console.log(err);
-          // }); 
+          this.loading = true;
+          const searchData = this.searchData;
+          this.$ajax.post('abace/Customer/get', {
+            page_no: searchData.page_no,
+            page_size: searchData.page_size,
+            type: this.selected,
+            keyword: this.keyword
+          })
+          .then(res => {
+            this.loading = false;
+            if (res.data.errcode === 0) {
+              this.data = res.data.data.list;
+              this.pageTotal = res.data.data.count;
+            } else {
+              this.$Message.error(res.data.errmsg);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          }); 
         },
         confirmDel: function(id) {
-          this.$ajax.post('blog/article/delete', {
+          this.$ajax.post('abace/customer/delete', {
             id: id
           }).then(res => {
             this.loading = false;
             if (res.data.errcode === 0) {
               this.getList();
-              this.$Message.success('删除成功');
+              this.$Message.success('delete success!');
             } else {
               this.$Message.error(res.data.errmsg);
             }
@@ -217,30 +204,16 @@ Vue.component('Page', Page);
         remove (index) {
           this.data6.splice(index, 1);
         },
-        switch (id, release) {
-          this.loading = true;
-          this.$ajax.post('blog/article/changeReleaseStatus', {
-            id: id,
-            release: true == release ? 1 : 0
-          }).then(res => {
-            this.loading = false;
-            if (res.data.errcode === 0) {
-              this.getList();
-            } else {
-              this.$Message.error(res.data.errmsg);
-            }
-          }) 
+        editCustomer (id) {
+          this.$router.push('/abace/index/customerEdit?id='+id);
         },
-        editArticle (id) {
-          this.$router.push('/admin/index/articleEdit?id='+id);
-        },
-        delArticle (id) { 
+        delCustomer (id) { 
           let account = this.data.filter(item => {
             return item.id === id;
           });
           this.$Modal.confirm({
-            title: '提示',
-            content: `确定要删除该文章么?`,
+            title: 'Notice',
+            content: 'Do you comfirm to delete?',
             onOk: () => {
               this.confirmDel(id);
             }
@@ -254,12 +227,33 @@ Vue.component('Page', Page);
           if (val === '0') {
             this.deleteSeleted();
           }
+          if (val === '1') {
+            this.$refs.table.exportCsv({
+              filename: 'The original data',
+              columns: [
+                {title: 'id',key: 'id'},
+                {title: 'cat',key: 'cat'},
+                {title: 'firstName',key: 'first_name'},
+                {title: 'middleName',key: 'middle_name'},
+                {title: 'lastName',key: 'last_name'},
+                {title: 'name',key: 'name'},
+                {title: 'title',key: 'title'},
+                {title: 'company',key: 'company'},
+                {title: 'address',key: 'address'},
+                {title: 'phone',key: 'phone'},
+                {title: 'industry',key: 'industry'},
+                {title: 'tag',key: 'tag'}
+              ],
+              data: this.data,
+              quoted: true
+            });
+          }
         },
         deleteSeleted () {
-          if (!this.selection.length) return this.$Message.error('请选择删除项');
+          if (!this.selection.length) return this.$Message.error('Please choose delete item');
           this.$Modal.confirm({
-            title: '提示',
-            content: `您确定要删除已选中的文章吗？`,
+            title: 'Notice',
+            content: 'Do you comfirm to delete?',
             onOk: () => {
               this.confirmDel(this.selection.toString());
             }
@@ -274,7 +268,7 @@ Vue.component('Page', Page);
           this.getList();
         },
         doSearch () {
-          alert(1);
+           this.getList();
         }
       }
     }
@@ -368,7 +362,7 @@ Vue.component('Page', Page);
       font-size: 14px
       top: 10px
       left: 8px
-      color: red
+      color: #333
       font-weight: blod
   .header
     background: #fff

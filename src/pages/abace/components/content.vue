@@ -16,15 +16,9 @@ export default {
     }
   },
   methods: {
-    doSearch () {
-      alert(this.keyword)
-       if (!this.keyword) {
-          this.$Message.config({top: 200});
-          this.$Message.error('请完成信息填写!');
-          return false;
-        }
+     getChildValue (childValue) {
+      console.log(childValue)
     }
-    
   },
   created () {
     
