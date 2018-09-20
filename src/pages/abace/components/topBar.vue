@@ -2,9 +2,13 @@
   <div class="topBar">
     <div class="login-content">
       <ul>
-        <li>Login</li>
-        <li style="">Logout</li>
-        <li>Admin</li>
+        <li v-if="isLogin" @click="login">
+          <span style="color:#57a3f3;cursor:pointer">Login</span>
+        </li>
+        <li v-if="isLogout" @click="logout">
+          <span style="color:#57a3f3;cursor:pointer">Logout</span>
+        </li>
+        <li >{{username}}</li>
 	    </ul>
     </div>
    
@@ -15,11 +19,53 @@
 
 <script>
 export default {
-  name: 'TopBar'
+  name: 'TopBar',
+  data () {
+    return {
+      isLogin: false,
+      isLogout: false,
+      isAdmin: false,
+      username: ''
+    }
+  },
+  methods: {
+    checkLogin () {
+      if (window.localStorage.token && window.localStorage.user_id && window.localStorage.username) {
+        this.isLogin = false;
+        this.isLogout = true;
+        this.username = window.localStorage.username
+      } else {
+        localStorage.clear();
+        const name = this.$route.path.split('/').pop();
+        if (name != "index") {
+          this.$router.push('/abace/login');
+        } else {
+          this.isLogin = true;
+          this.isLogout = false;
+        } 
+      }
+    },
+    logout () {
+      localStorage.clear();
+      this.isLogin = true;
+      this.isLogout = false;
+      this.username = '';
+      this.$router.push('/abace/index');
+    },
+    login () {
+      this.$router.push('/abace/login');
+    }
+  },
+  created () {
+    this.checkLogin();
+  },
+  watch: {
+    '$route' (to, from) {
+      this.checkLogin();
+    }
+  }
 }
 </script>
-
-
 
 <style lang="stylus" scoped>
   ul

@@ -143,18 +143,7 @@ Vue.component('Page', Page);
               }
             }
           ],
-          data: [
-            {
-              cat: 'cat-00000001',
-              first_name: 'Arthur',
-              title: 'Psychiatry',
-              company: 'company-00000001',
-              address: 'address-00000001',
-              instrudy: '-',
-              tag: 'tag-00000001',
-              create_time: '2018-9-12'
-            }
-          ],
+          data: [],
           loading: false,
           selection: []
         }
@@ -205,7 +194,9 @@ Vue.component('Page', Page);
           this.data6.splice(index, 1);
         },
         editCustomer (id) {
-          this.$router.push('/abace/index/customerEdit?id='+id);
+          const type = this.selected;
+          const keyword = this.keyword;
+          this.$router.push('/abace/index/customerEdit?id='+id+'&type='+type+'&keyword='+keyword);
         },
         delCustomer (id) { 
           let account = this.data.filter(item => {
@@ -242,7 +233,8 @@ Vue.component('Page', Page);
                 {title: 'address',key: 'address'},
                 {title: 'phone',key: 'phone'},
                 {title: 'industry',key: 'industry'},
-                {title: 'tag',key: 'tag'}
+                {title: 'tag',key: 'tag'
+                }
               ],
               data: this.data,
               quoted: true

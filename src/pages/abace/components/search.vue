@@ -10,13 +10,12 @@
       </Select>
       <span class="title">Abace Online Database</span>
       <span class="list">
-        <a href="" style="margin-left: 15px;">TagList</a>
-        <a href="" style="margin-left: 15px;">CompanyList</a>
+        <span style="margin-left:15px;color:#57a3f3;cursor:pointer" @click="doTagList">TagList</span>
+        <span style="margin-left:15px;color:#57a3f3;cursor:pointer" @click="doCompanyList">CompanyList</span>
       </span>
     </div>
   </div>
 </template>
-
 
 <script>
 export default {
@@ -30,15 +29,35 @@ export default {
   },
   methods: {
     doSearch () {
+      if (!window.localStorage.token || !window.localStorage.user_id || !window.localStorage.username) {
+        localStorage.clear();
+        this.$Message.error('Please login');
+        return false;
+      } 
       if (!this.keyword) {
         this.$Message.config({top: 200});
         this.$Message.error('请输入搜索关键字!');
         return false;
       }
       this.$router.push('/abace/index/customerList?type='+this.selected+'&keyword='+this.keyword);
-      //this.$emit('getChildValue', {type:this.selected, keyword:this.keyword})
+    },
+    doTagList () {
+      if (!window.localStorage.token || !window.localStorage.user_id || !window.localStorage.username) {
+        localStorage.clear();
+        this.$Message.error('Please login');
+        return false;
+      } 
+      this.$router.push('/abace/index/tagList');
+    },
+    doCompanyList () {
+      if (!window.localStorage.token || !window.localStorage.user_id || !window.localStorage.username) {
+        localStorage.clear();
+        this.$Message.error('Please login');
+        return false;
+      }
+      this.$router.push('/abace/index/companyList'); 
     }
-    
+
   },
   created () {
     

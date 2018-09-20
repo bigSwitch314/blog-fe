@@ -2,7 +2,7 @@
   
   <div class="body border">
      <div class="title border">
-        <router-link to="/abace/index/customerList">
+        <router-link :to="'customerList?type='+this.type+'&keyword='+this.keyword">
       <span class="titleA"> CustomerList</span>
        </router-link>
       <span class="titleB">&nbsp;>&nbsp; </span>
@@ -59,6 +59,8 @@ export default {
   name: 'userAdd',
   data () {
     return {
+      type: 1,
+      keyword: '',
       formItem: {
         id: '',
         cat: '',
@@ -120,9 +122,7 @@ export default {
       })
     },
     cancel () {
-      const type = this.$route.query.type;
-      const keyword = this.$route.query.keyword;
-      this.$router.push('/abace/index/customerList?type='+type+'&keyword='+keyword);
+      this.$router.push('/abace/index/customerList?type='+this.type+'&keyword='+this.keyword);
     },
     getDeatil: function() {
       console.log
@@ -158,6 +158,8 @@ export default {
   },
   created () {
     this.getDeatil();
+    this.type = this.$route.query.type;
+    this.keyword = this.$route.query.keyword;
   }
 }
 </script>

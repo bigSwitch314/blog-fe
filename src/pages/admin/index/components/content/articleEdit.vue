@@ -30,15 +30,15 @@
           </RadioGroup>
         </FormItem>
         <FormItem label="内容" prop="content">
-            <Input v-model="msg.mdValue" type="textarea" :autosize="{minRows: 4,maxRows: 8}" placeholder="Enter something...">{{msg.mdValue}}</Input>
+          <Input v-model="msg.mdValue" type="textarea" :autosize="{minRows: 4,maxRows: 8}" placeholder="Enter something...">{{msg.mdValue}}</Input>
+          <Button type="text" @click="contentEdit" style="color:#57a3f3;left:-56px;top:40px;position:absolute;width:40px">编辑</Button>
         </FormItem>
-        <span @click.native="contentEdit">编辑</span>
-        
        
         <FormItem>
           <Button type="primary" @click="submit">保存</Button>
           <Button style="margin-left: 40px" @click="$router.back()">取消</Button>
         </FormItem>
+
     </Form>
      
   </div>
@@ -167,7 +167,7 @@ export default {
       this.msg=res;
     },
     contentEdit () {
-      alert(11);
+      this.$router.push('/admin/index/markdown');
     }
   },
   created () {
@@ -189,6 +189,8 @@ export default {
   font-size: 14px
 .ivu-btn
   font-size: 14px;
+.ivu-btn-text:focus 
+  box-shadow: none
 </style>
 
 <style lang="stylus" scoped>
@@ -206,7 +208,7 @@ export default {
     .title-content
       top: 10px
       left: 18px
-      position: relative
+      position: relative 
       font-weight: bold
       font-size: 14px
       color: #495060

@@ -26,13 +26,18 @@ export default new Router({
         component: () => import('@/pages/admin/index/markdown')
       },
       {
+        path: '/abace/login',
+        name: '测试项目登录页面',
+        component: () => import('@/pages/abace/login')
+      },
+      {
         path: '/abace/index',
         name: '测试项目',
         component: () => import('@/pages/abace/index'),
         children: [
           {
             path: '',
-            name: '默认首页',
+            name: '默认页面',
             component: () => import('@/pages/abace/components/search')
           },
           {
@@ -49,6 +54,16 @@ export default new Router({
             path: 'customerEdit',
             name: '客户编辑',
             component: () => import('@/pages/abace/components/customerEdit')
+          },
+          {
+            path: 'tagList',
+            name: '标签列表',
+            component: () => import('@/pages/abace/components/tagList')
+          },
+          {
+            path: 'companyList',
+            name: '公司列表',
+            component: () => import('@/pages/abace/components/companyList')
           }
         ]
       },

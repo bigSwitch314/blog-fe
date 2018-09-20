@@ -14,6 +14,16 @@ const ajax = axios.create({
   timeout: 50000        // 请求超时时间
 });
 
+// 请求头添加token
+ajax.interceptors.request.use(function(config) {
+  if (window.localStorage.token) {
+    config.headers.token = `Bearer ${window.localStorage.token}`;
+  }
+  return config;
+}, function (err) {
+  return Promise.reject(err);
+});
+
 const ajax2 = axios.create({
   baseURL: 'http://bigswitch314.cn/', // api的base_url
   withCredentials: true,

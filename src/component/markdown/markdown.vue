@@ -1,7 +1,7 @@
 <template>
     <div class="mdContainer" :class="{ fullPage: fullPageStatus }">
         <div class="navContainer" v-if="navStatus">
-            <div class="nameContainer" v-if="icoStatusP" @click="happyDay">OVEN-mdEditor</div>
+            <div class="nameContainer" v-if="icoStatusP" @click="happyDay" style="color:#57a3f3">返回</div>
             <div class="markContainer">
                 <ul class="markListGroup">
                     <li class="markListItem" @click="addStrong" title="strong"><b>B</b></li>
@@ -270,7 +270,7 @@
                 }
             },
             happyDay:function(){
-                window.open('https://github.com/ovenslove/vue-mdEditor');
+                this.$router.back();
             }
         },
         computed: {
