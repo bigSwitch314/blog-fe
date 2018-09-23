@@ -30,13 +30,13 @@
           </RadioGroup>
         </FormItem>
         <FormItem label="内容" prop="content">
-          <Input v-model="msg.mdValue" type="textarea" :autosize="{minRows: 4,maxRows: 8}" placeholder="Enter something...">{{msg.mdValue}}</Input>
+          <Input v-html="msg.htmlValue" type="textarea" :autosize="{minRows: 4,maxRows: 8}" placeholder="Enter something..." class="ivu-form-item-content previewContainer markdown-body">{{msg.mdValue}}</Input>
           <Button type="text" @click="contentEdit" style="color:#57a3f3;left:-56px;top:40px;position:absolute;width:40px">编辑</Button>
         </FormItem>
        
         <FormItem>
           <Button type="primary" @click="submit">保存</Button>
-          <Button style="margin-left: 40px" @click="$router.back()">取消</Button>
+          <Button style="margin-left: 40px" @click="$router.push('/admin/index/articleList');">取消</Button>
         </FormItem>
 
     </Form>
@@ -53,7 +53,8 @@ export default {
   data () {
     return {
       msg: {
-        mdValue:'## Vue-markdownEditor22222'
+        mdValue:'## Vue-markdownEditor22222',
+        htmlValue: '请写文章'
       },
       formItem: {
         title: '',
@@ -97,10 +98,11 @@ export default {
           category_id: this.formItem.categorySelect,
           label_ids: this.formItem.labelSelect.toString(),
           release: this.formItem.release,
-          content: this.formItem.content
+          content_md: this.msg.mdValue,
+          content_html: this.msg.htmlValue
         }).then(res => {
           if (res.data.errcode === 0) {
-            this.$router.back();
+            this.$router.push('/admin/index/articleList');
             this.loading = false;
           }else{
             this.$Message.error(res.data.errmsg);
@@ -127,7 +129,16 @@ export default {
           this.formItem.categorySelect = res.data.data.category_id;
           this.formItem.labelSelect = res.data.data.label_ids;
           this.formItem.release = res.data.data.release;
-          this.formItem.content = res.data.data.content;
+          if (this.$route.params.mdValue) {
+            this.msg.mdValue   = this.$route.params.mdValue;
+            this.msg.htmlValue = this.$route.params.htmlValue;
+            this.formItem.content = this.$route.params.htmlValue;
+          } else {
+            this.msg.mdValue = res.data.data.content_md;
+            this.msg.htmlValue = res.data.data.content_html;
+            this.formItem.content = res.data.data.content_html;
+          }
+          
         } else {
           this.$Message.error(res.data.errmsg);
         }
@@ -167,7 +178,14 @@ export default {
       this.msg=res;
     },
     contentEdit () {
-      this.$router.push('/admin/index/markdown');
+      this.$router.push({ 
+        name : 'markdown', 
+        params: {
+          articleId: this.$route.query.id,
+          mdValue: this.msg.mdValue,
+          htmlValue: this.msg.mdValue
+        }
+      }) 
     }
   },
   created () {

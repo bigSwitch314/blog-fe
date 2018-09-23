@@ -2,8 +2,8 @@
   
   <div class="body border">
      <div class="title border">
-        <router-link to="/abace/index/customerList">
-      <span class="titleA"> CustomerList</span>
+      <router-link to="/abace/index/customerList">
+        <span class="titleA"> CustomerList</span>
        </router-link>
       <span class="titleB">&nbsp;>&nbsp; </span>
       <span class="titleC"> CustomerAdd</span>

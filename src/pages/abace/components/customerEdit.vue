@@ -178,6 +178,12 @@ export default {
 </style>
 
 <style lang="stylus" scoped>
+  /*引入github的markdown样式文件*/
+  @import "../../../assets/styles/github-markdown.css";
+    
+  /*引入atom的代码高亮样式文件*/
+  @import "../../../assets/styles/atom-one-dark.min.css";
+
   .body
     background-color: #fff
     margin-top: 85px

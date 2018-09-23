@@ -2,6 +2,7 @@
     <div class="indexContainer">
         <div class="editorContainer">
             <markdown 
+            :articleId="msg.articleId"
             :mdValuesP="msg.mdValue"  
             :fullPageStatusP="false" 
             :editStatusP="true" 
@@ -22,6 +23,7 @@
         data() {
             return {
                 msg: {
+                    articleId: 1234,
                     mdValue:'## Vue-markdownEditor22222'
                 }
             }
@@ -34,7 +36,11 @@
                 // res会传回一个data,包含属性mdValue和htmlValue，具体含义请自行翻译
                 this.msg=res;
             },
-        }
+        },
+        created () {
+          this.msg.articleId = this.$route.params.articleId;
+          this.msg.mdValue = this.$route.params.mdValue;
+        },
     }
 </script>
 

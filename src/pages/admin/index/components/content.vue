@@ -116,18 +116,18 @@ export default {
   .content
     background: #f1f2f7
     top: 100px
-    left : 140px
+    padding-left : 140px
     width: 100%
     height: 100%
     position: absolute
-    overflow:auto
+    overflow-y:auto
     .border
       &:before
         border-color: #ccc
       &:after
         border-color: #ccc
     .tableDisplay
-       padding-right: 180px   
+       padding-right: 40px   
        padding-left: 40px;
        top: 40px
        position: relative

@@ -1,7 +1,7 @@
 <template>
     <div class="mdContainer" :class="{ fullPage: fullPageStatus }">
         <div class="navContainer" v-if="navStatus">
-            <div class="nameContainer" v-if="icoStatusP" @click="happyDay" style="color:#57a3f3">返回</div>
+            <div class="nameContainer" v-if="icoStatusP" @click="happyDay" style="color:#57a3f3">完成</div>
             <div class="markContainer">
                 <ul class="markListGroup">
                     <li class="markListItem" @click="addStrong" title="strong"><b>B</b></li>
@@ -93,9 +93,10 @@
 
     export default {
         name: 'markdown',
-        props: ['mdValuesP', 'fullPageStatusP', 'editStatusP', 'previewStatusP', 'navStatusP', 'icoStatusP'],
+        props: ['articleId', 'mdValuesP', 'fullPageStatusP', 'editStatusP', 'previewStatusP', 'navStatusP', 'icoStatusP'],
         data() {
             return {
+                id: this.articleId,
                 input: this.mdValuesP || '',
                 editStatus: Boolean(this.editStatusP),
                 previewStatus: Boolean(this.previewStatusP),
@@ -104,12 +105,6 @@
                 icoStatus: Boolean(this.icoStatusP),
                 maxEditScrollHeight:0,
                 maxPreviewScrollHeight:0
-            }
-        },
-        created: function() {
-            if (!this.editStatus && !this.previewStatus) {
-                this.editStatus = true;
-                this.previewStatus = true;
             }
         },
         methods: {
@@ -269,8 +264,21 @@
                     document.querySelector('.previewContainer').scrollTop = this.maxPreviewScrollHeight*topPercent;
                 }
             },
-            happyDay:function(){
-                this.$router.back();
+            happyDay:function() {
+                this.$router.push({ 
+                  name : 'articleEdit', 
+                  params: {
+                    mdValue: this.input,
+                    htmlValue: marked(this.input, {sanitize: false })
+                  },
+                  query: {id:this.id}
+                }) 
+            }
+        },
+        created: function() {
+            if (!this.editStatus && !this.previewStatus) {
+                this.editStatus = true;
+                this.previewStatus = true;
             }
         },
         computed: {
@@ -297,8 +305,14 @@
     }
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+.markdown-body pre {
+    padding: 0px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    border-radius: 3px;
+}
 </style>
 
 <style lang="stylus" scoped>

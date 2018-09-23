@@ -76,6 +76,7 @@ export default {
     height: 100%
     top: 60px
     position: fixed
+    z-index: 10
     .li_style
       font-size:14px 
       line-height:30px

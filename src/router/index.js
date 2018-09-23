@@ -22,7 +22,7 @@ export default new Router({
       },
       {
         path: '/admin/index/markdown',
-        name: '测试',
+        name: 'markdown',
         component: () => import('@/pages/admin/index/markdown')
       },
       {
@@ -134,7 +134,7 @@ export default new Router({
           },
           {
             path: 'articleEdit',
-            name: '编辑文章',
+            name: 'articleEdit',
             component: () => import('@/pages/admin/index/components/content/articleEdit')
           },
         ]
