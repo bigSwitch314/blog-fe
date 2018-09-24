@@ -63,7 +63,7 @@
                handleCode.push('<div class="line">' + '&nbsp;' + item + '</div>');
                gutter.push('<div class="line">' + ++index + '</div>');
             });
-            return '<table style="background:#f7f7f7;margin-bottom:0px;display:inline-flex;width:100%;overflow:auto">' + 
+            return '<table style="background:#f7f7f7;margin-bottom:8px;display:inline-flex;width:100%;overflow:auto">' + 
                        '<tbody style="display: inline-flex;"> '+
                            '<tr style="background-color: #eff2f3;border: none">'+
                                '<td style="border:none;">' + gutter.join('')+ '</td>'+
@@ -93,11 +93,15 @@
 
     export default {
         name: 'markdown',
-        props: ['articleId', 'mdValuesP', 'fullPageStatusP', 'editStatusP', 'previewStatusP', 'navStatusP', 'icoStatusP'],
+        props: ['articleId', 'mdValuesP', 'title', 'categorySelect','labelSelect','release','fullPageStatusP', 'editStatusP', 'previewStatusP', 'navStatusP', 'icoStatusP'],
         data() {
             return {
                 id: this.articleId,
                 input: this.mdValuesP || '',
+                titleA: this.title || '',
+                categorySelectA: this.categorySelect || '',
+                labelSelectA: this.labelSelect || '',
+                releaseA: this.release || '',
                 editStatus: Boolean(this.editStatusP),
                 previewStatus: Boolean(this.previewStatusP),
                 fullPageStatus: Boolean(this.fullPageStatusP),
@@ -266,10 +270,14 @@
             },
             happyDay:function() {
                 this.$router.push({ 
-                  name : 'articleEdit', 
+                  name : this.id ? 'articleEdit' : 'articleAdd', 
                   params: {
                     mdValue: this.input,
-                    htmlValue: marked(this.input, {sanitize: false })
+                    htmlValue: marked(this.input, {sanitize: false }),
+                    title:this.titleA,
+                    categorySelect:this.categorySelectA,
+                    labelSelect:this.labelSelectA,
+                    release:this.releaseA,
                   },
                   query: {id:this.id}
                 }) 

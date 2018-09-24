@@ -124,7 +124,7 @@ export default new Router({
           },
           {
             path: 'articleAdd',
-            name: '默认文章列表',
+            name: 'articleAdd',
             component: () => import('@/pages/admin/index/components/content/articleAdd')
           },
           {

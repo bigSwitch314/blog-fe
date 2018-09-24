@@ -21,6 +21,27 @@
       <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
       <div>Loading</div>
     </Spin>
+    <Modal
+      v-model="modal"
+      title="文章预览"
+      width="900" 
+      scrollable
+      footer-hide>
+      <div style="font-size:26px;text-align:center;margin:10px ">{{preview.title}}</div>
+      <div style="width:500px;height:25px;margin:0 auto;text-align:center;margin-bottom:20px;">
+        <ul>
+          <li>发表于{{preview.create_time}}</li>
+          <li>|</li>
+          <li>分类于{{preview.category_name}}</li> 
+          <li>|</li>       
+          <li>阅读次数：{{preview.read_number}}</li> 
+          <li>|</li>    
+          <li>复制次数：0</li> 
+	      </ul>
+      </div>
+      <div v-html="preview.content" class="markdown-body blockquote markdown-body dl markdown-body ol markdown-body p markdown-body pre markdown-body table markdown-body ul"></div>
+      
+    </Modal>
   </div>
     
 </template>
@@ -28,6 +49,7 @@
     export default {
       data () {
         return {
+          modal: false,
           searchData: {
             page_no: 1,
             page_size: 10
@@ -118,7 +140,7 @@
                     },
                     on: {
                       click: () => {
-                        this.editArticle(params.row.id)
+                        this.previewArticle(params.index)
                       }
                     }
                   }, '预览'),
@@ -154,7 +176,8 @@
           ],
           data: [],
           loading: false,
-          selection: []
+          selection: [],
+          preview: {}
         }
       },
       created () {
@@ -211,6 +234,15 @@
               this.$Message.error(res.data.errmsg);
             }
           }) 
+        },
+        previewArticle (index) { 
+          this.preview.content = this.data[index].content_html;
+          this.preview.title = this.data[index].title;
+          this.preview.create_time = this.data[index].create_time;
+          this.preview.category_name = this.data[index].category_name;
+          this.preview.read_number = this.data[index].read_number;
+          //this.preview.copy_number = this.data[index].copy_number;
+          this.modal = true;
         },
         editArticle (id) {
           this.$router.push('/admin/index/articleEdit?id='+id);
@@ -331,6 +363,16 @@
 </style>
 
 <style lang="stylus" scoped>
+ul
+  margin: 0 auto
+  display:inline-block
+li
+  float: left
+  text-decoration: none
+  list-style: none
+  margin-left: 5px
+  margin-right: 5px
+  font-size: 14px
 .header
   background: #fff
   width: 100%

@@ -4,6 +4,10 @@
             <markdown 
             :articleId="msg.articleId"
             :mdValuesP="msg.mdValue"  
+            :title="msg.title"
+            :categorySelect="msg.categorySelect"
+            :labelSelect="msg.labelSelect"
+            :release="msg.release"
             :fullPageStatusP="false" 
             :editStatusP="true" 
             :previewStatusP="true" 
@@ -23,8 +27,12 @@
         data() {
             return {
                 msg: {
-                    articleId: 1234,
-                    mdValue:'## Vue-markdownEditor22222'
+                    articleId: 0,
+                    mdValue:'## Vue-markdownEditor22222',
+                    title: '',
+                    categorySelect: '',
+                    labelSelect: '',
+                    release: ''
                 }
             }
         },
@@ -38,8 +46,12 @@
             },
         },
         created () {
-          this.msg.articleId = this.$route.params.articleId;
-          this.msg.mdValue = this.$route.params.mdValue;
+          this.msg.articleId      = this.$route.params.articleId;
+          this.msg.mdValue        = this.$route.params.mdValue;
+          this.msg.title          = this.$route.params.title;
+          this.msg.categorySelect = this.$route.params.categorySelect;
+          this.msg.labelSelect    = this.$route.params.labelSelect;
+          this.msg.release        = this.$route.params.release;
         },
     }
 </script>

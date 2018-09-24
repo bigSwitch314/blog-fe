@@ -39,6 +39,12 @@ export default {
           this.title = '文章列表';
           this.subtitle = '';
           break;
+        case 'articleEdit':
+          this.back = true;
+          this.title = '文章列表';
+          this.subtitle = ' > 文章编辑';
+          this.urlFrom = '/admin/index/articleList';
+          break;
         case 'articleAdd':
           this.back = true;
           this.title = '文章列表';
