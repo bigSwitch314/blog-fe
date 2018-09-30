@@ -129,16 +129,19 @@ export default {
           this.formItem.categorySelect = res.data.data.category_id;
           this.formItem.labelSelect = res.data.data.label_ids;
           this.formItem.release = res.data.data.release;
+          this.msg.mdValue = res.data.data.content_md;
+          this.msg.htmlValue = res.data.data.content_html;
+          this.formItem.content = res.data.data.content_html;
+          // 编辑后，则使用编辑数据
           if (this.$route.params.mdValue) {
+            this.formItem.title  = this.$route.params.title;
+            this.formItem.categorySelect = this.$route.params.categorySelect;
+            this.formItem.labelSelect = this.$route.params.labelSelect;
+            this.formItem.release = this.$route.params.release;
             this.msg.mdValue   = this.$route.params.mdValue;
             this.msg.htmlValue = this.$route.params.htmlValue;
             this.formItem.content = this.$route.params.htmlValue;
-          } else {
-            this.msg.mdValue = res.data.data.content_md;
-            this.msg.htmlValue = res.data.data.content_html;
-            this.formItem.content = res.data.data.content_html;
-          }
-          
+          } 
         } else {
           this.$Message.error(res.data.errmsg);
         }
@@ -178,10 +181,14 @@ export default {
       this.msg=res;
     },
     contentEdit () {
-      this.$router.push({ 
+       this.$router.push({ 
         name : 'markdown', 
         params: {
           articleId: this.$route.query.id,
+          title: this.formItem.title,
+          categorySelect: this.formItem.categorySelect,
+          labelSelect: this.formItem.labelSelect,
+          release: this.formItem.release,
           mdValue: this.msg.mdValue,
           htmlValue: this.msg.mdValue
         }
@@ -190,7 +197,7 @@ export default {
   },
   created () {
     this.getCategory();
-    this.getLabel();
+    this.getLabel(); 
     this.getDeatil();
   },
 }

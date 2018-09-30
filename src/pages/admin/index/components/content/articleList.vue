@@ -1,7 +1,20 @@
 <template>
   <div>
     <header class="header">
-    
+      <Input v-model="searchData.title" clearable placeholder="标题" style="width: 160px" class="inputSty"/>
+      <DatePicker v-model="searchData.time" type="daterange" placement="bottom-start" placeholder="请选择日期" style="width: 200px" class="DatePickerSty"></DatePicker>
+      <Select v-model="searchData.category_id" clearable class="selectStyA" placeholder="请选择分类" >
+        <Option v-for="item in category" :key="item.id" :value="item.id" >{{item.name}}</Option>
+      </Select>
+      <Select
+        v-model="searchData.label_ids"
+        multiple
+        filterable
+        placeholder="请选择标签"
+        class="selectStyB">
+        <Option v-for="(item, index) in label" :value="item.id" :key="index">{{item.name}}</Option>
+      </Select>
+      <Button type="primary" class="btnSty" @click="doSearch">搜索</Button>
     </header>
     <Table stripe :columns="columns" :data="data" @on-selection-change="handleSelect"></Table>
     <footer class="footer">
@@ -28,7 +41,7 @@
       scrollable
       footer-hide>
       <div style="font-size:26px;text-align:center;margin:10px ">{{preview.title}}</div>
-      <div style="width:500px;height:25px;margin:0 auto;text-align:center;margin-bottom:20px;">
+      <div class="previewContentSty">
         <ul>
           <li>发表于{{preview.create_time}}</li>
           <li>|</li>
@@ -40,20 +53,26 @@
 	      </ul>
       </div>
       <div v-html="preview.content" class="markdown-body blockquote markdown-body dl markdown-body ol markdown-body p markdown-body pre markdown-body table markdown-body ul"></div>
-      
     </Modal>
   </div>
     
 </template>
 <script>
+    import { formatDate } from '@/utils/index.js';
     export default {
       data () {
         return {
           modal: false,
           searchData: {
             page_no: 1,
-            page_size: 10
+            page_size: 10,
+            title: '',
+            time: '',
+            category_id: '',
+            label_ids: ''
           },
+          category: [],
+          label: [],
           pageTotal: 0,
           columns: [
             {
@@ -140,7 +159,7 @@
                     },
                     on: {
                       click: () => {
-                        this.previewArticle(params.index)
+                        this.previewArticle(params.row.id)
                       }
                     }
                   }, '预览'),
@@ -182,6 +201,8 @@
       },
       created () {
         this.getList();
+        this.getcategoryList();
+        this.getlabelList();
       },
       methods: {
         getList: function() {
@@ -189,13 +210,50 @@
           const searchData = this.searchData;
           this.$ajax.post('blog/article/get', {
             page_no: searchData.page_no,
-            page_size: searchData.page_size
+            page_size: searchData.page_size,
+            title: this.searchData.title,
+            category_id: this.searchData.category_id,
+            label_ids: this.searchData.label_ids ? this.searchData.label_ids.toString() : '',
+            begin_time: this.searchData.time[0] ? formatDate(this.searchData.time[0], 'yyyy-MM-dd') : '',
+            end_time: this.searchData.time[1] ? formatDate(this.searchData.time[1], 'yyyy-MM-dd') : '',
           })
           .then(res => {
             this.loading = false;
             if (res.data.errcode === 0) {
               this.data = res.data.data.list;
               this.pageTotal = res.data.data.count;
+            } else {
+              this.$Message.error(res.data.errmsg);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          }); 
+        },
+        getcategoryList () {
+          this.loading = true;
+          this.$ajax.post('blog/category/get', {
+          })
+          .then(res => {
+            this.loading = false;
+            if (res.data.errcode === 0) {
+              this.category = res.data.data.list;
+            } else {
+              this.$Message.error(res.data.errmsg);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          }); 
+        },
+        getlabelList () {
+          this.loading = true;
+          this.$ajax.post('blog/label/get', {
+          })
+          .then(res => {
+            this.loading = false;
+            if (res.data.errcode === 0) {
+              this.label = res.data.data.list;
             } else {
               this.$Message.error(res.data.errmsg);
             }
@@ -235,14 +293,27 @@
             }
           }) 
         },
-        previewArticle (index) { 
-          this.preview.content = this.data[index].content_html;
-          this.preview.title = this.data[index].title;
-          this.preview.create_time = this.data[index].create_time;
-          this.preview.category_name = this.data[index].category_name;
-          this.preview.read_number = this.data[index].read_number;
-          //this.preview.copy_number = this.data[index].copy_number;
-          this.modal = true;
+        previewArticle (id) { 
+          this.$ajax
+          .post('blog/article/get', {id: id})
+          .then(res => {
+            if (res.data.errcode === 0) {
+              const category = this.category.find(function(value, index, arr) {
+                return value.id == res.data.data.category_id
+              })
+              this.preview.content = res.data.data.content_html;
+              this.preview.title = res.data.data.title;
+              this.preview.create_time = res.data.data.create_time;
+              this.preview.read_number = res.data.data.read_number;
+              this.preview.category_name = category.name;
+              this.modal = true;
+            } else {
+              this.$Message.error(res.data.errmsg);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          }); 
         },
         editArticle (id) {
           this.$router.push('/admin/index/articleEdit?id='+id);
@@ -287,7 +358,7 @@
           this.getList();
         },
         doSearch () {
-          alert(1);
+          this.getList();
         }
       }
     }
@@ -363,16 +434,22 @@
 </style>
 
 <style lang="stylus" scoped>
-ul
+.previewContentSty
+  width: 500px
+  height: 25px
   margin: 0 auto
-  display:inline-block
-li
-  float: left
-  text-decoration: none
-  list-style: none
-  margin-left: 5px
-  margin-right: 5px
-  font-size: 14px
+  text-align: center
+  margin-bottom: 20px
+  ul
+    margin: 0 auto
+    display:inline-block
+  li
+    float: left
+    text-decoration: none
+    list-style: none
+    margin-left: 5px
+    margin-right: 5px
+    font-size: 14px
 .header
   background: #fff
   width: 100%
@@ -380,6 +457,34 @@ li
   border-right: 1px solid #eaeaea
   border-left: 1px solid #eaeaea
   border-top: 1px solid #eaeaea
+  position: relative
+  .inputSty
+    position: absolute 
+    left: 20px
+    top: 25px
+  .DatePickerSty
+    position: absolute
+    left: 200px
+    top: 25px
+  .selectStyA
+    position: absolute
+    left: 420px
+    top: 25px
+    width: 100px;
+  .selectStyB
+    position: absolute
+    left: 540px
+    top: 25px
+    width: 350px
+    z-index: 20
+  .btnSty
+    position: absolute
+    left: 910px
+    top: 25px
+    width: 60px;
+    background-color: #19be6b
+    border-color: #19be6b
+    
 .footer
   background: #fff
   width: 100%

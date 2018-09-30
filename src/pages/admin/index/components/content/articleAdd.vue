@@ -144,11 +144,6 @@ export default {
       this.msg=res;
     },
     contentEdit () {
-      console.log(this.formItem.title);
-      console.log(this.formItem.categorySelect);
-      console.log(this.formItem.labelSelect);
-      console.log(this.formItem.release);
-    
       this.$router.push({ 
         name : 'markdown', 
         params: {
@@ -166,6 +161,7 @@ export default {
   created () {
     this.getCategory();
     this.getLabel();
+
     if(this.$route.params.title)          this.formItem.title          = this.$route.params.title;
     if(this.$route.params.categorySelect) this.formItem.categorySelect = this.$route.params.categorySelect;
     if(this.$route.params.labelSelect)    this.formItem.labelSelect    = this.$route.params.labelSelect;
