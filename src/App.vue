@@ -10,5 +10,5 @@
 
 <style lang="stylus" scoped>
   .bgc
-    background-color: #1f2d3d
+    background-color: #fff
 </style>
