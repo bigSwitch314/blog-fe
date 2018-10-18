@@ -32,7 +32,7 @@
               <router-link to="/home/index">    
                 <li> <i class="menu-item-icon fa fa-search fa-fw"></i> 搜索 </li>
               </router-link> 
-              <router-link to="/home/index">    
+              <router-link to="/admin/index">    
                 <li> <i class="menu-item-icon fa fa-search fa-fw"></i> 后台 </li>
               </router-link> 
 	        </ul> 

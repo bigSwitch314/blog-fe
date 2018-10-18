@@ -5,7 +5,7 @@
     <bottom-bar> </bottom-bar>
 
     <!-- 回到顶部 -->
-    <BackTop :height="120" :bottom="20" class="top">
+    <BackTop :height="120" :bottom="20" class="back_top back_top_on">
       <i class="fa fa-arrow-up" style="font-size:12px; line-height:24px;padding:0"></i>
     </BackTop>
   </div>
@@ -32,16 +32,20 @@ body{
 <style lang="stylus" scoped>
   .body
     background-color: #fff 
-    .top
+    .back_top
       color: #fff
       font-size: 12px
       background: #262a30
       width:24px
       height:24px
       text-align:center
+      bottom: -100px
+      -webkit-transform: translateZ(0)
       transition-property: bottom
       transition-duration: 0.2s
       transition-timing-function: ease-in-out
-      transition-delay: 0s   
+      transition-delay: 0s 
+    .back_top_on
+      bottom: 19px; 
       
 </style>

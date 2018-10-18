@@ -69,7 +69,7 @@
             title: '',
             time: '',
             category_id: '',
-            label_ids: ''
+            label_ids: '',
           },
           category: [],
           label: [],
@@ -216,6 +216,7 @@
             label_ids: this.searchData.label_ids ? this.searchData.label_ids.toString() : '',
             begin_time: this.searchData.time[0] ? formatDate(this.searchData.time[0], 'yyyy-MM-dd') : '',
             end_time: this.searchData.time[1] ? formatDate(this.searchData.time[1], 'yyyy-MM-dd') : '',
+            back_ground: 1
           })
           .then(res => {
             this.loading = false;

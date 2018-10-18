@@ -1,109 +1,45 @@
 <template>
   <div class="container">
     <!-- 文章列表 -->
-    <div class="no-article" v-if="!haveArticle" style="font-size:14px;text-align: center;">
+    <div class="no-article" v-if="!articleList.length" style="font-size:14px;text-align: center;">
       还未发布文章哦～
     </div>
 
-    <div class="articleList" v-if="haveArticle">
+    <div class="articleList" v-if="articleList.length" v-for="article in articleList" :key="article.id">
       <div class="title">
-        <router-link to="/foo" style="color: #555">golang40行代码实现通用协程池</router-link>
+        <router-link :to="'index/articleDetail?id='+ article.id" style="color: #555">{{article.title}}</router-link>
       </div>
       <div class="meta">
         <ul>
-          <li><i class="ii fa fa-calendar-o"></i> 创建于2018-08-08 </li>
+          <li><i class="ii fa fa-calendar-o"></i> 创建于{{article.create_time}} </li>
           <li>|</li>
-          <li><i class="ii fa fa-folder-o"></i> 分类于goland </li>
+          <li><i class="ii fa fa-folder-o"></i> 分类于 <router-link to="/home/index">{{article.category_name}}</router-link></li>
           <li>|</li>
-          <li><i class="ii fa fa-eye"></i> 阅读次数: 74 </li>
+          <li><i class="ii fa fa-eye"></i> 阅读次数:{{article.read_number}}  </li>
         </ul>
       </div>
       <div class="content">
-        代码仓库goroutine-pool golang 的协程管理golang 协程机制很方便的解决了并发编程的问题，但是协程并不是没有开销的，所以也需要适当限制一下数量。 不使用协程池的代码(示例代码使用 chan 实现，代码略啰嗦)1234567891011121314151617181920212 ...
+        {{article.content}}
         <div class="readAll">
-          <router-link to="/foo" style="color: #555">
+          <router-link :to="'index/articleDetail?id='+ article.id">
             <span style="border-bottom: 2px solid rgb(102, 102, 102); padding-bottom:2px">阅读全文</span> »  
-          </router-link></div>      
-      </div>
-    </div>
-
-    <div class="articleList" v-if="haveArticle">
-      <div class="title">
-        <router-link to="/foo" style="color: #555">golang40行代码实现通用协程池</router-link>
-      </div>
-      <div class="meta">
-        <ul>
-          <li title="发表时间"><i class="ii fa fa-calendar-o"></i> 2018-08-08 </li>
-          <li>|</li>
-          <li title="分类"><i class="ii fa fa-folder-o"></i> goland </li>
-          <li>|</li>
-          <li title="阅读次数"><i class="ii fa fa-eye"></i> 56 </li>
-        </ul>
-      </div>
-      <div class="content">
-        代码仓库goroutine-pool golang 的协程管理golang 协程机制很方便的解决了并发编程的问题，但是协程并不是没有开销的，所以也需要适当限制一下数量。 不使用协程池的代码(示例代码使用 chan 实现，代码略啰嗦)1234567891011121314151617181920212 ...
-        <div class="readAll">
-          <router-link to="/foo" style="color: #555">
-            <span style="border-bottom: 2px solid rgb(102, 102, 102); padding-bottom:2px">查看原文</span> »  
-          </router-link></div>      
-      </div>
-    </div>
-
-    <div class="articleList" v-if="haveArticle">
-      <div class="title">
-        <router-link to="/foo" style="color: #555">golang40行代码实现通用协程池</router-link>
-      </div>
-      <div class="meta">
-        <ul>
-          <li title="发表时间"><i class="ii fa fa-calendar-o"></i> 2018-08-08 </li>
-          <li>|</li>
-          <li title="分类"><i class="ii fa fa-folder-o"></i> goland </li>
-          <li>|</li>
-          <li title="阅读次数"><i class="ii fa fa-eye"></i> 56 </li>
-        </ul>
-      </div>
-      <div class="content">
-        代码仓库goroutine-pool golang 的协程管理golang 协程机制很方便的解决了并发编程的问题，但是协程并不是没有开销的，所以也需要适当限制一下数量。 不使用协程池的代码(示例代码使用 chan 实现，代码略啰嗦)1234567891011121314151617181920212 ...
-        <div class="readAll">
-          <router-link to="/foo" style="color: #555">
-            <span style="border-bottom: 2px solid rgb(102, 102, 102); padding-bottom:2px">查看原文</span> »  
-          </router-link></div>      
-      </div>
-    </div>
-
-    <div class="articleList" v-if="haveArticle">
-      <div class="title">
-        <router-link to="/foo" style="color: #555">golang40行代码实现通用协程池</router-link>
-      </div>
-      <div class="meta">
-        <ul>
-          <li title="发表时间"><i class="ii fa fa-calendar-o"></i> 2018-08-08 </li>
-          <li>|</li>
-          <li title="分类"><i class="ii fa fa-folder-o"></i> goland </li>
-          <li>|</li>
-          <li title="阅读次数"><i class="ii fa fa-eye"></i> 56 </li>
-        </ul>
-      </div>
-      <div class="content">
-        代码仓库goroutine-pool golang 的协程管理golang 协程机制很方便的解决了并发编程的问题，但是协程并不是没有开销的，所以也需要适当限制一下数量。 不使用协程池的代码(示例代码使用 chan 实现，代码略啰嗦)1234567891011121314151617181920212 ...
-        <div class="readAll">
-          <router-link to="/foo" style="color: #555">
-            <span style="border-bottom: 2px solid rgb(102, 102, 102); padding-bottom:2px">查看原文</span> »  
-          </router-link></div>      
+          </router-link>
+          </div>      
       </div>
     </div>
 
      <!-- 分页 -->
-    <div v-if="haveArticle" style="margin-bottom:10px">
+    <div v-if="articleList.length" style="margin-bottom:10px">
        <hr style="border-top: 1px solid #eee"/>
-       <Page :total="400" size="small" style="font-size: 14px"/>
+       <Page :total="pageTotal" :postData="searchData" @on-change="pageChange" @on-page-size-change="pageSizeChange" size="small" style="font-size: 14px"/>
     </div>
 
-    
-  
+    <!-- spin -->
+    <Spin fix v-if="loading" size="large" class = "positionSty">
+      <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
+      <div>Loading</div>
+    </Spin>
 
-
-    
   </div>
   
 </template>
@@ -114,17 +50,47 @@ export default {
   name: '',
   data () {
     return {
-      articleList: [
-        {
-          title: "golang40行代码实现通用协程池",
-          create_time: "2018-08-08",
-          category: "goland",
-          read_number: 56,
-          content: "代码仓库goroutine-pool golang 的协程管理golang 协程机制很方便的解决了并发编程的问题，但是协程并不是没有开销的，所以也需要适当限制一下数量。 不使用协程池的代码(示例代码使用 chan 实现，代码略啰嗦)1234567891011121314151617181920212 ..."
-        },
-      ],
-      haveArticle: 1,
+      pageTotal: 0,
+      searchData: {
+        page_no: 1,
+        page_size: 10,
+      },
+      articleList: [],
+      loading: false
     }
+  },
+  methods: {
+    getArticleList: function() {
+      this.loading = true;
+      const searchData = this.searchData;
+      this.$ajax.post('blog/article/get', {
+        page_no: searchData.page_no,
+        page_size: searchData.page_size
+      })
+      .then(res => {
+        this.loading = false;
+        if (res.data.errcode === 0) {
+          this.articleList = res.data.data.list;
+          this.pageTotal = res.data.data.count;
+        } else {
+          this.$Message.error(res.data.errmsg);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      }); 
+    },
+    pageChange (page_no) {
+      this.searchData.page_no = page_no;
+      this.getArticleList();
+    },
+    pageSizeChange (page_size) {
+      this.searchData.page_size = page_size;
+      this.getArticleList();
+    },
+  },
+  created() {
+    this.getArticleList();
   },
   
 }
@@ -158,6 +124,12 @@ export default {
         width: 100%
       .meta
         margin-bottom: 20px
+        a
+          color: #555
+          text-decoration: none; 
+          border-bottom: 1px solid #ccc; 
+        a:hover
+          border-bottom: 1px solid #222;  
       .meta ul
         position: relative
         top: 2px
@@ -176,6 +148,10 @@ export default {
         line-height: 28px
         color: #555
         .readAll
-          margin-top: 20px       
+          margin-top: 20px   
+          a
+            color: #555
+          a:hover
+            color: #222  
 
 </style>

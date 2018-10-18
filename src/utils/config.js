@@ -16,7 +16,7 @@ function getBaseUrl () {
   } else if (subDomain === 'vip') {
     baseUrl = 'https://wx.bigswitch314.cn'
   } else {
-    baseUrl = 'https://beta.bigswitch314.cn'
+    baseUrl = 'https://bigswitch314.cn'
   }
   return baseUrl
 }

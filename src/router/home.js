@@ -14,6 +14,11 @@ export default {
       component:  () => import('@/pages/home/components/content/home'),
     },
     {
+      path: 'articleDetail',
+      name: '文章详情',
+      component:  () => import('@/pages/home/components/content/articleDetail'),
+    },
+    {
       path: 'category',
       name: '分类',
       component:  () => import('@/pages/home/components/content/category'),
