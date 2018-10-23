@@ -13,7 +13,7 @@
         <ul>
           <li><i class="ii fa fa-calendar-o"></i> 创建于{{article.create_time}} </li>
           <li>|</li>
-          <li><i class="ii fa fa-folder-o"></i> 分类于 <router-link to="/home/index">{{article.category_name}}</router-link></li>
+          <li><i class="ii fa fa-folder-o"></i> 分类于 <router-link :to="'/home/index/oneCategoryStats?id=' + article.category_id + '&name=' + article.category_name">{{article.category_name}}</router-link></li>
           <li>|</li>
           <li><i class="ii fa fa-eye"></i> 阅读次数:{{article.read_number}}  </li>
         </ul>

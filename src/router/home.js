@@ -19,9 +19,14 @@ export default {
       component:  () => import('@/pages/home/components/content/articleDetail'),
     },
     {
-      path: 'category',
-      name: '分类',
-      component:  () => import('@/pages/home/components/content/category'),
+      path: 'allCategoryStats',
+      name: '所有分类统计',
+      component:  () => import('@/pages/home/components/content/allCategoryStats'),
+    },
+    {
+      path: 'oneCategoryStats',
+      name: '某个分类统计',
+      component:  () => import('@/pages/home/components/content/oneCategoryStats'),
     },
     {
       path: 'label',

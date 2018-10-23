@@ -13,7 +13,7 @@
           <li>|</li>
           <li title="分类于">
             <i class="ii fa fa-folder-o"></i> 
-            <router-link to="/home/index">{{articleDetail.category_name}}</router-link>
+            <router-link :to="'/home/index/oneCategoryStats?id=' + articleDetail.category_id + '&name=' + articleDetail.category_name">{{articleDetail.category_name}}</router-link>
           </li>
           <li>|</li>
           <li title="阅读次数"><i class="ii fa fa-eye"></i> {{articleDetail.read_number}} </li>
@@ -138,6 +138,7 @@ export default {
     .meta
       margin-bottom: 40px
       text-align: center
+      line-height: 2
       a
         color: #555
         text-decoration: none; 

@@ -11,7 +11,7 @@
               <router-link to="/home/index">
                 <li> <i class="menu-item-icon fa fa-fw fa-home"></i> 首页 </li>
               </router-link>
-              <router-link to="/home/index/category">
+              <router-link to="/home/index/allCategoryStats">
                 <li> <i class="menu-item-icon fa fa-fw fa-th"></i> 分类 </li>
               </router-link>
               <router-link to="/home/index/label"> 
