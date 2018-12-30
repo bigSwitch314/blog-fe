@@ -14,7 +14,7 @@
               <router-link to="/home/index/allCategoryStats">
                 <li> <i class="menu-item-icon fa fa-fw fa-th"></i> 分类 </li>
               </router-link>
-              <router-link to="/home/index/label"> 
+              <router-link to="/home/index/allLabelStats"> 
                 <li> <i class="menu-item-icon fa fa-fw fa-tags"></i> 标签 </li>
               </router-link>  
               <router-link to="/home/index/archive">

@@ -34,6 +34,16 @@ export default {
       component:  () => import('@/pages/home/components/content/label'),
     },
     {
+      path: 'allLabelStats',
+      name: '所有标签统计',
+      component:  () => import('@/pages/home/components/content/allLabelStats'),
+    },
+    {
+      path: 'oneLabelStats',
+      name: '某个标签统计',
+      component:  () => import('@/pages/home/components/content/oneLabelStats'),
+    },
+    {
       path: 'archive',
       name: '归档',
       component:  () => import('@/pages/home/components/content/archive'),

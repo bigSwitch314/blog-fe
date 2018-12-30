@@ -4,13 +4,20 @@
       <span class="title-content"> 标签编辑</span>
     </div>
     <Form ref="formItem" :model="formItem" :rules="ruleValidate" label-position="right" :label-width="90" class="fromSty">
-        <FormItem label="标签名称" prop="name" class="itemSty">
-          <Input v-model="formItem.name"></Input>
-        </FormItem>
-        <FormItem>
-          <Button type="primary" @click="submit">保存</Button>
-          <Button style="margin-left: 40px" @click="$router.back()">取消</Button>
-        </FormItem>
+      <FormItem label="标签名称" prop="name" class="itemSty">
+        <Input v-model="formItem.name"/>
+      </FormItem>
+      <FormItem label="显示级别" prop="size" class="itemSty">
+        <Select v-model="formItem.size" clearable>
+          <Option v-for="item in option" :value="item.value" :key="item.value">
+            {{item.label}}
+          </Option>
+        </Select>
+      </FormItem>
+      <FormItem>
+        <Button type="primary" @click="submit">保存</Button>
+        <Button style="margin-left: 40px" @click="$router.back()">取消</Button>
+      </FormItem>
     </Form>
   </div>
 </template>
@@ -39,13 +46,24 @@ export default {
     };
     return {
       formItem: {
-        name: ''
+        name: '',
+        size: '',
       },
       ruleValidate: {
         name: [
           { required: true, message: 'The name cannot be empty', trigger: 'blur' }
+        ],
+        size: [
+          { required: true, message: 'The size cannot be empty', trigger: 'blur' }
         ]
-      }
+      },
+      option: [
+        {label: 'size-level-1', value: '1'},
+        {label: 'size-level-2', value: '2'},
+        {label: 'size-level-3', value: '3'},
+        {label: 'size-level-4', value: '4'},
+        {label: 'size-level-5', value: '5'},
+      ],
     }
   },
   methods: {
@@ -58,7 +76,8 @@ export default {
         }
         this.$ajax.post('blog/label/edit', {
           id: this.formItem.id,
-          name: this.formItem.name
+          name: this.formItem.name,
+          size: Number(this.formItem.size)
         }).then(res => {
           if (res.data.errcode === 0) {
             this.$router.back(); 

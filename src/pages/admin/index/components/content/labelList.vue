@@ -50,6 +50,10 @@
               key: 'name',
             },
             {
+              title: '显示级别',
+              key: 'size',
+            },
+            {
               title: '创建时间',
               key: 'create_time'
             },   

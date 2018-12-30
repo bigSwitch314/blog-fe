@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <div class="no-article" v-if="!pageTotal" style="font-size:14px;text-align: center;">
-      {{categoty_name}}分类还未添加文章哦～
+      {{label_name}}标签还未添加文章哦～
     </div>
     <div class="have-article" v-if="pageTotal">
       <div class="title">
-        <span>{{categoty_name}}</span> 
-        <small>分类</small> 
+        <span>{{label_name}}</span> 
+        <small>标签</small> 
       </div>
       <div class="article" v-for="item in articleList" :key="item.id">
         <span class="time">{{item.create_time}}</span>
@@ -29,6 +29,7 @@
   </div>
 </template>
 
+
 <script>
 export default {
   name: '',
@@ -41,7 +42,7 @@ export default {
         id: ''
       },
       articleList: [],
-      categoty_name: '',
+      label_name: '',
       loading: false
     }
   },
@@ -49,7 +50,7 @@ export default {
     getArticleList: function() {
       this.loading = true;
       const searchData = this.searchData;
-      this.$ajax.post('blog/category/getArticleByCategory', {
+      this.$ajax.post('blog/label/getArticleByLabel', {
         id: searchData.id,
         page_no: searchData.page_no,
         page_size: searchData.page_size,
@@ -78,7 +79,7 @@ export default {
   },
   created() {
     this.searchData.id=this.$route.query.id,
-    this.categoty_name=this.$route.query.name,
+    this.label_name=this.$route.query.name,
     this.getArticleList();
   },
 

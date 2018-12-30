@@ -39,7 +39,7 @@
       <!-- 标签 -->
       <div class="label">
         <ul v-for="(item,index) in articleDetail.label" :key="index">
-          <router-link to="/home/index">
+          <router-link :to="'/home/index/oneLabelStats?id=' + item.id">
             <li>#{{item.name}}</li>
           </router-link>
         </ul>
