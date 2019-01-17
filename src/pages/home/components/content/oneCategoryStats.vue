@@ -51,6 +51,7 @@ export default {
       const searchData = this.searchData;
       this.$ajax.post('blog/category/getArticleByCategory', {
         id: searchData.id,
+        type: 1,
         page_no: searchData.page_no,
         page_size: searchData.page_size,
       })

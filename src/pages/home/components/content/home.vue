@@ -64,6 +64,7 @@ export default {
       this.loading = true;
       const searchData = this.searchData;
       this.$ajax.post('blog/article/get', {
+        type: 1,
         page_no: searchData.page_no,
         page_size: searchData.page_size
       })

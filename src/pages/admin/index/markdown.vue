@@ -7,6 +7,7 @@
             :title="msg.title"
             :categorySelect="msg.categorySelect"
             :labelSelect="msg.labelSelect"
+            :type="msg.type"
             :release="msg.release"
             :fullPageStatusP="false" 
             :editStatusP="true" 
@@ -32,6 +33,7 @@
                     title: '',
                     categorySelect: '',
                     labelSelect: '',
+                    type: '',
                     release: ''
                 }
             }
@@ -51,6 +53,7 @@
           this.msg.title          = this.$route.params.title;
           this.msg.categorySelect = this.$route.params.categorySelect;
           this.msg.labelSelect    = this.$route.params.labelSelect;
+          this.msg.type           = this.$route.params.type;
           this.msg.release        = this.$route.params.release;
         },
     }

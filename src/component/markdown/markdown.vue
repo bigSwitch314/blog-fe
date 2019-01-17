@@ -93,7 +93,7 @@
 
     export default {
         name: 'markdown',
-        props: ['articleId', 'mdValuesP', 'title', 'categorySelect','labelSelect','release','fullPageStatusP', 'editStatusP', 'previewStatusP', 'navStatusP', 'icoStatusP'],
+        props: ['articleId', 'mdValuesP', 'title', 'categorySelect','labelSelect', 'type', 'release','fullPageStatusP', 'editStatusP', 'previewStatusP', 'navStatusP', 'icoStatusP'],
         data() {
             return {
                 id: this.articleId,
@@ -101,6 +101,7 @@
                 titleA: this.title || '',
                 categorySelectA: this.categorySelect || '',
                 labelSelectA: this.labelSelect || '',
+                typeA: this.type || '',
                 releaseA: this.release || '',
                 editStatus: Boolean(this.editStatusP),
                 previewStatus: Boolean(this.previewStatusP),
@@ -277,6 +278,7 @@
                     title:this.titleA,
                     categorySelect:this.categorySelectA,
                     labelSelect:this.labelSelectA,
+                    type:this.typeA,
                     release:this.releaseA,
                   },
                   query: {id:this.id}

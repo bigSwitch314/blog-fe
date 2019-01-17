@@ -3,7 +3,7 @@ import Qs from 'qs';
 
 // 1.创建axios实例
 const ajax = axios.create({
-  baseURL: 'http://bigswitch314.cn/', // api的base_url
+  baseURL: 'http://api-b.bigswitch314.cn:443/', // api的base_url
   withCredentials: true,
   headers: {'Content-Type': 'application/x-www-form-urlencoded'},
   transformRequest: [function (data) {

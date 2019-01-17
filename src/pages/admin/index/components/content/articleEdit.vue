@@ -23,6 +23,14 @@
             </router-link>
           </CheckboxGroup>
         </FormItem>
+        <FormItem label="类型" prop="type">
+          <RadioGroup v-model="formItem.type">
+            <Radio :label="1">原创</Radio>
+            <Radio :label="2">转载</Radio>
+            <Radio :label="3">作者简介</Radio>
+            <Radio :label="4">开源项目</Radio>
+          </RadioGroup>
+        </FormItem>
         <FormItem label="发布" prop="release">
           <RadioGroup v-model="formItem.release">
             <Radio :label="1" >是</Radio>
@@ -62,6 +70,7 @@ export default {
         categorySelect: [],
         labelDisplay: [],
         labelSelect: [],
+        type: '1',
         release: '0',
         content: ''
       },
@@ -71,6 +80,9 @@ export default {
         ],
         categorySelect: [
           { required: true, message: 'The category cannot be empty'}
+        ],
+        type: [
+          { required: true, message: 'The type cannot be empty'}
         ],
         release: [
           { required: true, message: 'The release cannot be empty'}
@@ -97,6 +109,7 @@ export default {
           title: this.formItem.title,
           category_id: this.formItem.categorySelect,
           label_ids: this.formItem.labelSelect.toString(),
+          type: this.formItem.type,
           release: this.formItem.release,
           content_md: this.msg.mdValue,
           content_html: this.msg.htmlValue
@@ -128,6 +141,7 @@ export default {
           this.formItem.title = res.data.data.title;
           this.formItem.categorySelect = res.data.data.category_id;
           this.formItem.labelSelect = res.data.data.label_ids;
+          this.formItem.type = res.data.data.type;
           this.formItem.release = res.data.data.release;
           this.msg.mdValue = res.data.data.content_md;
           this.msg.htmlValue = res.data.data.content_html;
@@ -137,6 +151,7 @@ export default {
             this.formItem.title  = this.$route.params.title;
             this.formItem.categorySelect = this.$route.params.categorySelect;
             this.formItem.labelSelect = this.$route.params.labelSelect;
+            this.formItem.type = this.$route.params.type;
             this.formItem.release = this.$route.params.release;
             this.msg.mdValue   = this.$route.params.mdValue;
             this.msg.htmlValue = this.$route.params.htmlValue;
@@ -188,6 +203,7 @@ export default {
           title: this.formItem.title,
           categorySelect: this.formItem.categorySelect,
           labelSelect: this.formItem.labelSelect,
+          type: this.formItem.type,
           release: this.formItem.release,
           mdValue: this.msg.mdValue,
           htmlValue: this.msg.mdValue
